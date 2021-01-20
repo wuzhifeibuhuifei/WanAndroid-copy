@@ -3,6 +3,8 @@ package com.example.wanandroid_copy
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
+import com.ashokvarma.bottomnavigation.BottomNavigationBar
+import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.example.a_common.base.BaseActivity
 import com.example.a_common.state.login.LoginSucListener
 import com.example.a_common.utils.Preference
@@ -24,7 +26,91 @@ class MainActivity : BaseActivity(), LoginSucListener {
         initToolbar()
         initDrawerLayout()
         initFabButton()
+        initBottomNavigationBar()
+    }
 
+    private fun initBottomNavigationBar() {
+        // navigationBar组件固定写法
+        mNavigationBar.setMode(BottomNavigationBar.MODE_DEFAULT)
+            .setActiveColor(R.color.colorPrimaryDark)
+            .addItem(
+                BottomNavigationItem(
+                    R.mipmap.navigation_home,
+                    getString(R.string.navigation_home)
+                )
+            )
+            .addItem(
+                BottomNavigationItem(
+                    R.mipmap.navigation_wechat,
+                    getString(R.string.navigation_wechat)
+                )
+            )
+            .addItem(
+                BottomNavigationItem(
+                    R.mipmap.navigation_system,
+                    getString(R.string.navigation_system)
+                )
+            )
+            .addItem(
+                BottomNavigationItem(
+                    R.mipmap.navigation_navigation,
+                    getString(R.string.navigation_navigation)
+                )
+            )
+            .addItem(
+                BottomNavigationItem(
+                    R.mipmap.nagivation_project,
+                    getString(R.string.navigation_project)
+                )
+            )
+            .setBarBackgroundColor(R.color.white)
+            .setFirstSelectedPosition(Constant.HOME)
+            .initialise()
+        mNavigationBar.setTabSelectedListener(object : BottomNavigationBar.OnTabSelectedListener {
+
+            override fun onTabUnselected(position: Int) {}
+
+            override fun onTabReselected(position: Int) {}
+
+            override fun onTabSelected(position: Int) {
+//                switchFragment(position)
+            }
+
+        })
+    }
+
+    /*跳转到不同的fragment中*/
+    private fun switchFragment(position: Int) {
+        when (position) {
+            Constant.HOME -> {
+                setToolBar(toolbar, getString(R.string.navigation_home))
+//                changeFragment(homeFragment)
+            }
+
+            Constant.WE_CHAT -> {
+                setToolBar(toolbar, getString(R.string.navigation_wechat))
+//                changeFragment(weChatFragment)
+            }
+
+            Constant.NAGIVATION -> {
+                setToolBar(toolbar, getString(R.string.navigation_navigation))
+//                changeFragment(nagivationFragment)
+            }
+
+            Constant.SYSTEM -> {
+                setToolBar(toolbar, getString(R.string.navigation_system))
+//                changeFragment(systemFragment)
+            }
+
+            Constant.PROJECT -> {
+                setToolBar(toolbar, getString(R.string.navigation_project))
+//                changeFragment(projectFragment)
+            }
+
+            else -> {
+
+            }
+        }
     }
 
     /*初始化首页右下角的查询按钮功能*/

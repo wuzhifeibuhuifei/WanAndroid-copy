@@ -29,7 +29,6 @@ class Preference<T>(private val name: String, private val default: T) : ReadWrit
     private fun <T> findPreference(name: String, default: T): T = with(preference) {
         val res: Any = when (default) {
             is Long -> getLong(name, default)
-            // TODO 这里有问题，后面需要再改
 //            is String -> getString(name, default)
             is Int -> getInt(name, default)
             is Boolean -> getBoolean(name, default)
