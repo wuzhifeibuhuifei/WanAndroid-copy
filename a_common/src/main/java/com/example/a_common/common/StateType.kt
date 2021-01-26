@@ -1,4 +1,4 @@
-package com.kkaka.common.common
+package com.example.a_common.common
 
 /**
  * @author Laizexin on 2019/11/29

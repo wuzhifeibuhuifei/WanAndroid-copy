@@ -3,11 +3,13 @@ package com.example.wanandroid_copy
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.Fragment
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.example.a_common.base.BaseActivity
 import com.example.a_common.state.login.LoginSucListener
 import com.example.a_common.utils.Preference
+import com.example.wanandroid_copy.home.view.HomeFragment
 import com.kkaka.common.constant.Constant
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_drawer_header.view.*
@@ -16,6 +18,8 @@ import kotlinx.android.synthetic.main.layout_toolbar.*
 class MainActivity : BaseActivity(), LoginSucListener {
 
 
+    private lateinit var currentFragment: Fragment
+    private val homeFragment: HomeFragment by lazy { HomeFragment() }
     private var mUserName: String by Preference(Constant.USERNAME_KEY, "未登录")
 
     override fun getLayoutId(): Int {
@@ -27,6 +31,16 @@ class MainActivity : BaseActivity(), LoginSucListener {
         initDrawerLayout()
         initFabButton()
         initBottomNavigationBar()
+        defaultFragment()
+    }
+
+
+    /**
+     * 添加默认的fragment
+     */
+    private fun defaultFragment() {
+
+
     }
 
     private fun initBottomNavigationBar() {

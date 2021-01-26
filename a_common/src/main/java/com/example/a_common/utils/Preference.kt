@@ -11,6 +11,7 @@ import kotlin.reflect.KProperty
  */
 class Preference<T>(private val name: String, private val default: T) : ReadWriteProperty<Any?, T> {
 
+
     companion object {
         lateinit var preference: SharedPreferences
 
@@ -27,9 +28,9 @@ class Preference<T>(private val name: String, private val default: T) : ReadWrit
         putPreference(name, value)
 
     private fun <T> findPreference(name: String, default: T): T = with(preference) {
-        val res: Any = when (default) {
+        val res: Any? = when (default) {
             is Long -> getLong(name, default)
-//            is String -> getString(name, default)
+            is String -> getString(name, default)
             is Int -> getInt(name, default)
             is Boolean -> getBoolean(name, default)
             is Float -> getFloat(name, default)
@@ -48,4 +49,9 @@ class Preference<T>(private val name: String, private val default: T) : ReadWrit
             else -> throw IllegalArgumentException("This type can be saved into Preferences")
         }.apply()
     }
+
+    private fun edit() {
+
+    }
+
 }
