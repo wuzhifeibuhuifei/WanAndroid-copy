@@ -1,4 +1,4 @@
-package com.example.wanandroid_copy.account.data.login.register
+package com.example.wanandroid_copy.account.data.register
 
 data class RegisterRsp(
     var username: String,

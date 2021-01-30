@@ -9,7 +9,7 @@ import com.example.a_common.utils.Util
 /**
  * 基础的baseViewModel类
  */
-class BaseViewModel<T : BaseRepository>(application: Application) : AndroidViewModel(application) {
+open class BaseViewModel<T : BaseRepository>(application: Application) : AndroidViewModel(application) {
 
     /**
      * 延迟生成一个mutableLiveData对象

@@ -6,4 +6,6 @@ import com.example.a_common.base.BaseViewModel
 
 class ArticleViewModel<T : BaseRepository>(application: Application) : BaseViewModel<T>(application) {
 
+
+
 }

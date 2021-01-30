@@ -7,15 +7,21 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.StringBuilder
 
 class RetrofitFactory {
 
-    private var retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(Constant.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .client(initOkHttpClient())
-        .build()
+    lateinit var retrofit: Retrofit
+
+    init {
+        retrofit = Retrofit.Builder()
+            .baseUrl(Constant.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(initOkHttpClient())
+            .build()
+    }
+
 
     /**
      * 生成okhttp对象
@@ -28,6 +34,18 @@ class RetrofitFactory {
             .addInterceptor(initCommonInterceptor())
 //            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
+    }
+
+    private fun initCommonInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            val request = chain.request()
+                .newBuilder()
+                .addHeader("Content-Type", "application/json")
+                .addHeader("charset", "UTF-8")
+                .build()
+
+            chain.proceed(request)
+        }
     }
 
     /**
@@ -50,6 +68,44 @@ class RetrofitFactory {
     }
 
     private fun initCookieIntercept(): Interceptor {
+        return Interceptor { chain ->
+            val request = chain.request()
+            val response = chain.proceed(request)
+            val requestUrl = request.url().toString()
+            val domain = request.url().host()
+            //只保存登录或者注册
+            if (requestUrl.contains(Constant.LOGIN_KEY) || requestUrl.contains(Constant.REGISTER_KEY)) {
+                val mCookie = response.headers(Constant.SET_COOKIE_KEY)
+                mCookie?.let {
+                    saveCookie(domain, parseCookie(it))
+                }
+            }
+            response
+        }
+    }
 
+    private fun parseCookie(it: List<String>): String {
+        if (it.isEmpty()) {
+            return ""
+        }
+
+        val stringBuilder = StringBuilder()
+
+        it.forEach { cookie ->
+            stringBuilder.append(cookie).append(";")
+        }
+
+        if (stringBuilder.isEmpty()) {
+            return ""
+        }
+        //末尾的";"去掉
+        return stringBuilder.deleteCharAt(stringBuilder.length - 1).toString()
+    }
+
+    private fun saveCookie(domain: String?, parseCookie: String) {
+        domain?.let {
+            var resutl: String by Preference(it, parseCookie)
+            resutl = parseCookie
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.example.wanandroid_copy.api
 
 import com.example.a_common.https.BaseResponse
 import com.example.wanandroid_copy.account.data.login.LoginRsp
-import com.example.wanandroid_copy.account.data.login.register.RegisterRsp
+import com.example.wanandroid_copy.account.data.register.RegisterRsp
 import com.example.wanandroid_copy.collect.data.CollectRsp
 import com.example.wanandroid_copy.home.data.BannerRsp
 import com.example.wanandroid_copy.home.data.HomeArticleRsp

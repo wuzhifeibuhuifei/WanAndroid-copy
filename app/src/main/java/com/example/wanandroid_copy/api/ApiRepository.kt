@@ -1,12 +1,12 @@
 package com.example.wanandroid_copy.api
 
 import com.example.a_common.base.BaseRepository
-import retrofit2.Retrofit
+import com.example.a_common.https.RetrofitFactory
 
-class ApiRepository :BaseRepository() {
+open class ApiRepository : BaseRepository() {
 
-//    val apiService: ApiService by lazy {
-//        null
-//    }
+    val apiService: ApiService by lazy {
+        RetrofitFactory().retrofit.create(ApiService::class.java)
+    }
 
 }
