@@ -1,6 +1,7 @@
 package com.example.a_common.base
 
 import android.text.TextUtils
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.a_common.callback.EmptyCallback
@@ -12,7 +13,7 @@ import com.example.a_common.utils.Util
 import com.kingja.loadsir.callback.SuccessCallback
 import org.jetbrains.anko.toast
 
-abstract class LifecycleActivity<T : BaseViewModel<*>> : BaseActivity() {
+abstract class LifecycleFragment<T : BaseViewModel<*>> : BaseFragment() {
 
     lateinit var mViewModel: T
 
@@ -43,14 +44,14 @@ abstract class LifecycleActivity<T : BaseViewModel<*>> : BaseActivity() {
 
     open fun showError(msg: String) {
         if (!TextUtils.isEmpty(msg)) {
-            toast(msg)
+            activity?.toast(msg)
         }
         loadService.showCallback(ErrorCallback::class.java)
     }
 
     open fun showTip(msg: String) {
         if (!TextUtils.isEmpty(msg)) {
-            toast(msg)
+            activity?.toast(msg)
         }
         loadService.showCallback(SuccessCallback::class.java)
     }

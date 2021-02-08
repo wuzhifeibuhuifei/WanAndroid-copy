@@ -17,6 +17,7 @@ open class BaseRepository {
         CompositeDisposable()
     }
 
+    // 用CompositeSubscription进行统一管理，便于后续进行数据的切断
     fun subscribe(disposable: Disposable) = mCompositeSubscription.add(disposable)
 
     fun unSubscribe() = mCompositeSubscription.dispose()

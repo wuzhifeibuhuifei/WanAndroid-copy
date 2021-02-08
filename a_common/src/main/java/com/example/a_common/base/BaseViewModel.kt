@@ -9,7 +9,8 @@ import com.example.a_common.utils.Util
 /**
  * 基础的baseViewModel类
  */
-open class BaseViewModel<T : BaseRepository>(application: Application) : AndroidViewModel(application) {
+open class BaseViewModel<T : BaseRepository>(application: Application) :
+    AndroidViewModel(application) {
 
     /**
      * 延迟生成一个mutableLiveData对象
@@ -21,7 +22,7 @@ open class BaseViewModel<T : BaseRepository>(application: Application) : Android
     /**
      * 通过反射repository对象
      */
-    val mRepository: T by lazy {
+    val mRespository: T by lazy {
         (Util.getClass<T>(this)).getDeclaredConstructor(MutableLiveData::class.java)
             .newInstance()
     }
@@ -32,6 +33,6 @@ open class BaseViewModel<T : BaseRepository>(application: Application) : Android
      */
     override fun onCleared() {
         super.onCleared()
-        mRepository.unSubscribe()
+        mRespository.unSubscribe()
     }
 }

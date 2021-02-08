@@ -35,7 +35,9 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun getLayoutId(): Int
 
     /*不同的网络转态下的回调内容*/
-    abstract fun reLoad()
+    open fun reLoad() {
+
+    }
 
 
     override fun onDestroy() {

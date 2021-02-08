@@ -5,17 +5,19 @@ import com.example.a_common.base.BaseRepository
 import com.example.a_common.common.State
 import com.example.a_common.https.BaseResponse
 import com.example.wanandroid_copy.api.ApiRepository
+import com.example.wanandroid_copy.api.BaseObserver
+import com.kkaka.common.ext.execute
 import java.text.FieldPosition
 
-class ArticleRepository(val loadState: MutableLiveData<State>): ApiRepository() {
+open class ArticleRepository(val loadState: MutableLiveData<State>) : ApiRepository() {
 
     // 文章中的收藏和取消收藏功能
     fun collect(position: Int, liveData: MutableLiveData<BaseResponse<Any>>) {
-        apiService.collect(position).execute(BaseObserver(liveData,loadState,this))
+        apiService.collect(position).execute(BaseObserver(liveData, loadState, this))
     }
 
-    fun unCollect() {
-
+    fun unCollect(position: Int, liveData: MutableLiveData<BaseResponse<Any>>) {
+        apiService.unCollect(position).execute(BaseObserver(liveData, loadState, this))
     }
 
 }

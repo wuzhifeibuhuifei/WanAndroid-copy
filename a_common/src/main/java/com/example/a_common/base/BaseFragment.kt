@@ -19,13 +19,25 @@ abstract class BaseFragment : Fragment() {
     ): View? {
         val inflate = inflater.inflate(getLayoutId(), null)
         loadService = LoadSir.getDefault().register(inflate) {
-            reaLoad()
+            reLoad()
         }
         return loadService.loadLayout
     }
 
-    // 加载逻辑
-    abstract fun reaLoad()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initData()
+    }
+
+    abstract fun initView()
+
+    open fun initData() {
+    }
+
+    open fun reLoad() {
+        initData()
+    }
 
     // 获取layout的id
     abstract fun getLayoutId(): Int

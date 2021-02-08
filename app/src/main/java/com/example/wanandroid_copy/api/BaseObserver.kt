@@ -10,11 +10,16 @@ import com.kkaka.common.constant.Constant
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
+/**
+ * RxJava
+ *
+ */
 class BaseObserver<T : BaseResponse<*>>(
     private val liveData: MutableLiveData<T>,
     private val loadState: MutableLiveData<State>,
     private val repository: BaseRepository
 ) : Observer<T> {
+
     override fun onComplete() {
         TODO("Not yet implemented")
     }
@@ -23,11 +28,13 @@ class BaseObserver<T : BaseResponse<*>>(
         repository.subscribe(d)
     }
 
+    // 发送下一步需要做的事情
     override fun onNext(response: T) {
         when (response.errorCode) {
             Constant.RESPONSE_SUCCESS -> {
                 if (response.data is List<*>) {
                     if ((response.data as List<*>).isEmpty()) {
+                        // 为空则更改状态，便于页面刷新
                         loadState.postValue(State(StateType.EMPTY))
                         return
                     }
